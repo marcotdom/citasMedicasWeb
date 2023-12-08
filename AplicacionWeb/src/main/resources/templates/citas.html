@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>Agendar cita</title>
+	<meta name="description" content="" />
+	<meta name="viewport" content="width=device-width" />
+	<base href="/" />
+	<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+	<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+	<script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css" />
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+
+</head>
+
+<body>
+
+	<div class="container-fluid" style="margin: 20px;">
+		<div class="row">
+			<div class="col-xs-2" />
+			<div class="col-xs-8">
+				<a th:onclick="window.location.href = '/medicos';" class="btn btn-danger">Regresar</a>
+
+				<!-- tu tabla aquí siempre se verá al 100% en todas las resolcuiones-->
+				Citas agendadas para Dr(a): <span id="user2" class="text-secondary"></span>
+			</div>
+			<div class="col-xs-2" />
+		</div>
+	</div>
+
+
+	<div class="container-fluid" style="margin-top:20px;">
+		<div class="row">
+			<div class="col-xs-4" style="margin-right:10px;"><a>Fecha:</a></div>
+			<div class="col-xs-10">
+				<input id="datepicker" />
+				<script>
+					$('#datepicker').datepicker({
+						uiLibrary: 'bootstrap4',
+						format: 'dd-mm-yyyy'
+					});
+				</script>
+			</div>
+			<div class="col-xs-4" />
+		</div>
+	</div>
+
+
+
+
+
+	<script type="text/javascript">
+		var citasAgendadas;
+		$("#user2").html(sessionStorage.getItem("nombreMedicoSeleccionado"));
+		window.onload = function () {
+			// Initial function call
+			$("#fechaSel").html(sessionStorage.getItem("fechaSeleccionada"));
+		}
+
+		sessionStorage.getItem("usuarioLoggeado");
+		$("#datepicker").on("changeDate", function (e) {
+			sessionStorage.fechaSeleccionada = $('#datepicker').datepicker().val();
+			var comando = 'citasAgendadas/' + sessionStorage.medicoSeleccionado + '/' + $('#datepicker').datepicker().val();
+			window.location.href = comando;
+		});
+
+	</script>
+
+	<div class="container-fluid" style="margin: 20px;">
+		<div class="row">
+
+			<div class="col-xs-12">
+				<span id="fechaSel" class="text-secondary"></span>
+				<table class="table table-striped table-bordered">
+					<thead class="table-dark">
+
+						<tr>
+							<th>Hora</th>
+							<th>Paciente</th>
+							<th>Correo electrónico</th>
+							<th>Agendada por</th>
+
+
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="cita: ${citasAgendadas}">
+							<td th:text="${cita.hora}"></td>
+							<td th:text="${cita.paciente}"></td>
+							<td th:text="${cita.correo}"></td>
+							<td th:text="${cita.agente}"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+		</div>
+	</div>
+
+
+
+
+</body>
+
+</html>

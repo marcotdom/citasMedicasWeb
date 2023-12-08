@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>Citas médicas</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+    <base href="/"/>
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<h1 class ="m-5">Aplicación de citas médicas</h1>
+
+<div class="container unauthenticated">
+     <a href="/oauth2/authorization/facebook" type="submit" class="btn btn-lg btn-primary"
+      style="text-align : center">Iniciar sesión con Facebook</a>
+    
+</div>
+
+
+<script type="text/javascript">
+	function isEmpty(value){
+	  return (value == null || value.length === 0);
+	}
+	
+	$.get("/mensajito", function(data, status){
+    console.log("Data: " + data + "\nStatus: " + status);
+  	});
+    $.get("/usuario_facebook", function(data) {
+        $("#user").html(data.nombreFacebook);
+        
+        if(!isEmpty(data.nombreFacebook)){
+			sessionStorage.usuarioLoggeado = data.nombreFacebook;
+			window.location.href = "/medicos";	
+		}
+
+    });
+
+</script>
+</body>
+</html>
