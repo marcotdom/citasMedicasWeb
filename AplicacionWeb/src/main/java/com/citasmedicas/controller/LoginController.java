@@ -15,7 +15,7 @@ public class LoginController {
 	
 	 @GetMapping("/usuario_facebook")
 	    public Map<String, Object> user(@AuthenticationPrincipal OAuth2User principal) {
-		 	System.out.println(principal.toString());  
+		 	System.out.println("-"+principal.toString());  
 		 	return Collections.singletonMap("nombreFacebook", principal.getAttribute("name"));
 	 	}
 	 
